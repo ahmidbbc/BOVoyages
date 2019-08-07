@@ -31,7 +31,6 @@ Encore
 	])
 	.addStyleEntry("css/app", [
 		"./node_modules/bootstrap/dist/css/bootstrap.css",
-		"./node_modules/@fortawesome/fortawesome-free/css/all.css",
 		"./assets/css/app.css"
 	])
     //.addEntry('page1', './assets/js/page1.js')
