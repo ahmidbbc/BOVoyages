@@ -57,7 +57,7 @@ class Travel
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="travels")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="travels", cascade={"persist"})
      */
     private $client;
 
