@@ -3,17 +3,17 @@
 {% block title %}Travel index{% endblock %}
 
 {% block body %}
-    <h1>Travel index</h1>
+    <h1>Voyage index</h1>
     <table class="table table-striped">
         <thead class="bg-dark text-white">
             <tr>
                 <th>Destination</th>
-                <th>Details</th>
-                <th>FromDate</th>
-                <th>ToDate</th>
-                <th>MaxGuests</th>
-                <th>RetailPrice</th>
-                <th>DiscountRate</th>
+                <th>Detail</th>
+                <th>Date debut</th>
+                <th>Date fin</th>
+                <th>Maximum de voyageurs</th>
+                <th>Prix</th>
+                <th>Reduction</th>
                 <th>Status</th>
                 <th>actions</th>
 
@@ -31,8 +31,8 @@
                 <td>{{ travel.discountRate }}</td>
                 <td>{{ statusList[travel.status] }}</td>
                 <td>
-                    <a class="btn btn-secondary btn-block m-2" href="{{ path('travel_show', {'id': travel.id}) }}">show</a>
-                    <a class="btn btn-info btn-block m-2" href="{{ path('travel_edit', {'id': travel.id}) }}">edit</a>
+                    <a class="btn btn-secondary btn-block m-2" href="{{ path('travel_show', {'id': travel.id}) }}">Montrer</a>
+                    <a class="btn btn-info btn-block m-2" href="{{ path('travel_edit', {'id': travel.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('travel_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('travel_new') }}">Nouveau</a>
 {% endblock %}

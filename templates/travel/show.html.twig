@@ -3,7 +3,7 @@
 {% block title %}Travel{% endblock %}
 
 {% block body %}
-    <h1>Travel</h1>
+    <h1>Voyage</h1>
 
     <table class="table">
         <tbody>
@@ -12,27 +12,27 @@
                 <td>{{ travel.destination }}</td>
             </tr>
             <tr>
-                <th>Details</th>
+                <th>Détail</th>
                 <td>{{ travel.details }}</td>
             </tr>
             <tr>
-                <th>FromDate</th>
+                <th>Date Debut</th>
                 <td>{{ travel.fromDate ? travel.fromDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>ToDate</th>
+                <th>Date Fin</th>
                 <td>{{ travel.toDate ? travel.toDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>MaxGuests</th>
+                <th>Maximum de voyageurs</th>
                 <td>{{ travel.maxGuests }}</td>
             </tr>
             <tr>
-                <th>RetailPrice</th>
+                <th>Prix</th>
                 <td>{{ travel.retailPrice }}</td>
             </tr>
             <tr>
-                <th>DiscountRate</th>
+                <th>Reduction</th>
                 <td>{{ travel.discountRate }}</td>
             </tr>
             <tr>
@@ -42,9 +42,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('travel_index') }}">back to list</a>
+    <a href="{{ path('travel_index') }}">Retour a la liste</a>
 
-    <a href="{{ path('travel_edit', {'id': travel.id}) }}">edit</a>
+    <a href="{{ path('travel_edit', {'id': travel.id}) }}">éditer</a>
 
     {{ include('travel/_delete_form.html.twig') }}
 {% endblock %}
