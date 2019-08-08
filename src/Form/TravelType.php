@@ -20,8 +20,6 @@ class TravelType extends AbstractType
             ->add('retailPrice')
             ->add('discountRate')
             ->add('status')
-            ->add('clientCreditCard')
-            ->add('client')
         ;
     }
 
