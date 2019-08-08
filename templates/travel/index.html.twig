@@ -4,8 +4,8 @@
 
 {% block body %}
     <h1>Travel index</h1>
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="bg-dark text-white">
             <tr>
                 <th>Destination</th>
                 <th>Details</th>
@@ -29,10 +29,10 @@
                 <td>{{ travel.maxGuests }}</td>
                 <td>{{ travel.retailPrice }}</td>
                 <td>{{ travel.discountRate }}</td>
-                <td>{{ travel.status }}</td>
+                <td>{{ statusList[travel.status] }}</td>
                 <td>
-                    <a href="{{ path('travel_show', {'id': travel.id}) }}">show</a>
-                    <a href="{{ path('travel_edit', {'id': travel.id}) }}">edit</a>
+                    <a class="btn btn-secondary btn-block m-2" href="{{ path('travel_show', {'id': travel.id}) }}">show</a>
+                    <a class="btn btn-info btn-block m-2" href="{{ path('travel_edit', {'id': travel.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

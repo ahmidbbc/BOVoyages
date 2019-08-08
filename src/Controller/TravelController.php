@@ -20,8 +20,18 @@ class TravelController extends AbstractController
      */
     public function index(TravelRepository $travelRepository): Response
     {
+        $statusList = [
+            "A la vente",
+            "Réservé",
+            "Attente paiment",
+            "Controle disponibilité",
+            "Accepté",
+            "Refusé"
+        ];
+
         return $this->render('travel/index.html.twig', [
             'travels' => $travelRepository->findAll(),
+            'statusList' => $statusList
         ]);
     }
 

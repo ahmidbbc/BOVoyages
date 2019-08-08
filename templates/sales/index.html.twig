@@ -3,27 +3,31 @@
 {% block title %}Hello SalesController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
+<div class="row justify-content-center">
+    <div class="col-9">
+
     <h1>Liste des Voyages</h1>
 
     {% for sale in salesList %}
         <h2>{{ sale.destination }}</h2>
-    <div class="row justify-content-center border border-info rounded p-2">
+        <div class="row justify-content-center">
+            <div class="col-9 border border-info rounded">
+                <div class="row p-2">
+                    <div class="col-3">
+                        <img src="/img/obese-malbouffe-web.jpg" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-7">{{ sale.details | nl2br }}</div>
+                </div>
+            </div>
+            <div class="col-3">
+                <button class="btn-primary">Réserver</button>
+            </div>
+         </div>
 
-        <div class="col-3">
-            <img src="/img/obese-malbouffe-web.jpg" alt="" class="img-fluid">
-        </div>
-        <div class="col-9">{{ sale.details }}</div>
-
-
-    </div>
 
     {% endfor %}
+    </div>
 
 
 </div>
