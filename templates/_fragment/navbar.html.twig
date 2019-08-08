@@ -6,13 +6,18 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('sales_index') }}">Voyages Visiteur</a>
-            </li>
+            {% if client is defined and client.role == 1 %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('travel_index') }}">Voyage Admin <span class="sr-only">(current)</span></a>
+                </li>
+            {%  else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('sales_index') }}">Voyages Visiteur</a>
+                </li>
+            {% endif %}
             <li class="nav-item active">
-                <a class="nav-link" href="{{ path('travel_index') }}">Voyage Admin <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('login') }}">{% if client is defined %}Deconnexion{% else %}Connexion{% endif %}<span class="sr-only">(current)</span></a>
             </li>
-
         </ul>
     </div>
 </nav>

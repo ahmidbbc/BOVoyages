@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Travel;
+use App\Entity\User;
 use App\Form\TravelType;
 use App\Repository\TravelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,11 +17,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TravelController extends AbstractController
 {
+
     /**
-     * @Route("/", name="travel_index", methods={"GET"})
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
+     * TravelController constructor.
+     */
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
+
+    /**
+     * @Route("/admin", name="travel_index", methods={"GET"})
      */
     public function index(TravelRepository $travelRepository): Response
     {
+        $client = $this->session->get('user', null);
+
         $statusList = [
             "A la vente",
             "Réservé",
@@ -31,7 +50,8 @@ class TravelController extends AbstractController
 
         return $this->render('travel/index.html.twig', [
             'travels' => $travelRepository->findAll(),
-            'statusList' => $statusList
+            'statusList' => $statusList,
+            'client' => $client
         ]);
     }
 
@@ -40,6 +60,8 @@ class TravelController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $client = $this->session->get('user', null);
+
         $travel = new Travel();
         $form = $this->createForm(TravelType::class, $travel);
         $form->handleRequest($request);
@@ -55,6 +77,7 @@ class TravelController extends AbstractController
         return $this->render('travel/new.html.twig', [
             'travel' => $travel,
             'form' => $form->createView(),
+            'client' => $client
         ]);
     }
 
@@ -63,8 +86,11 @@ class TravelController extends AbstractController
      */
     public function show(Travel $travel): Response
     {
+        $client = $this->session->get('user', null);
+
         return $this->render('travel/show.html.twig', [
             'travel' => $travel,
+            'client' => $client
         ]);
     }
 
@@ -73,6 +99,8 @@ class TravelController extends AbstractController
      */
     public function edit(Request $request, Travel $travel): Response
     {
+        $client = $this->session->get('user', null);
+
         $form = $this->createForm(TravelType::class, $travel);
         $form->handleRequest($request);
 
@@ -85,6 +113,7 @@ class TravelController extends AbstractController
         return $this->render('travel/edit.html.twig', [
             'travel' => $travel,
             'form' => $form->createView(),
+            'client' => $client
         ]);
     }
 
