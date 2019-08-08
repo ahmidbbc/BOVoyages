@@ -19,6 +19,15 @@ class TravelRepository extends ServiceEntityRepository
         parent::__construct($registry, Travel::class);
     }
 
+    public function getTravelList()
+    {
+        $qb = $this->createQueryBuilder('travel')
+            ->select('travel')
+            ->where('travel.status = 0');
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Travel[] Returns an array of Travel objects
     //  */
