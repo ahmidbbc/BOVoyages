@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Travel index{% endblock %}
+
+    {% block body %}
+        <div class="row justify-content-center bg bg-primary"><h1>Liste des réservations</h1></div>
+        <table class="table table-striped">
+            <thead class="bg-dark text-white">
+            <tr>
+                <th>Destination</th>
+                <th>Detail</th>
+                <th>Date debut</th>
+                <th>Date fin</th>
+                <th>Maximum de voyageurs</th>
+                <th>Prix</th>
+                <th>Reduction</th>
+                <th>Status</th>
+                <th>actions</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for sale in salesList %}
+                <tr>
+                    <td>{{ sale.destination }}</td>
+                    <td>{{ sale.details }}</td>
+                    <td>{{ sale.fromDate ? sale.fromDate|date('d-m-Y') : '' }}</td>
+                    <td>{{ sale.toDate ? sale.toDate|date('d-m-Y') : '' }}</td>
+                    <td>{{ sale.maxGuests }}</td>
+                    <td>{{ sale.retailPrice }}</td>
+                    <td>{{ sale.discountRate }}</td>
+                    <td id="status">{{ statusList[sale.status] }}</td>
+                    <td>
+                        <a href="{{ path('sales_List', {'id': sale.id}) }}" class="editStatus btn btn-primary text-decoration-none text-white">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="11">Aucune réservation en cours</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            $( document ).ready(function() {
+
+                $('.editStatus').click(function (event) {
+                    if($(this).text() == 'Modifier') {
+                        event.preventDefault();
+
+                        statusElt = $('#status');
+
+                        $(this).removeClass('editStatus btn-primary').addClass('editedStatus');
+
+                        statusList = [
+                            "A la vente",
+                            "Réservé",
+                            "Attente paiment",
+                            "Controle disponibilité",
+                            "Accepté",
+                            "Refusé"
+                        ];
+
+                        selectElt = $('<select></select>');
+
+                        for (i = 0; i <= statusList.length - 1; i++) {
+                            optionElt = $('<option>' + statusList[i] + '</option>');
+                            selectElt.append(optionElt);
+                        }
+
+                        $(this).parent().prev().append(selectElt);
+                        $(this).addClass('btn-info');
+                        $(this).text('Enregistrer');
+                        $(this).attr('href', '/travel/sales?id=1/' + optionElt.val())
+                    }
+                });
+            });
+
+        </script>
+    {% endblock %}

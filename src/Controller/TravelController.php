@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Travel;
-use App\Entity\User;
 use App\Form\TravelType;
 use App\Repository\TravelRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,20 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TravelController extends AbstractController
 {
-
     /**
      * @var SessionInterface
      */
     private $session;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
      * TravelController constructor.
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(EntityManagerInterface $em, SessionInterface $session)
     {
         $this->session = $session;
+        $this->em = $em;
     }
-
 
     /**
      * @Route("/admin", name="travel_index", methods={"GET"})
@@ -38,7 +42,7 @@ class TravelController extends AbstractController
     public function index(TravelRepository $travelRepository): Response
     {
 
-        $client = $this->session->get('user');
+        $client = $this->session->get('user', null);
 
         $statusList = [
             "A la vente",
@@ -57,11 +61,36 @@ class TravelController extends AbstractController
     }
 
     /**
+     * @Route("/sales", name="sales_List")
+     */
+    public function salesList(TravelRepository $repository)
+    {
+        $client = $this->session->get('user', null);
+
+
+        $statusList = [
+            "A la vente",
+            "Réservé",
+            "Attente paiment",
+            "Controle disponibilité",
+            "Accepté",
+            "Refusé"
+        ];
+
+        return $this->render('travel/sales.html.twig', [
+            'salesList' => $repository->getSales(),
+            'statusList' => $statusList,
+            'client' => $client
+        ]);
+
+    }
+
+    /**
      * @Route("/new", name="travel_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
-        $client = $this->session->get('user');
+        $client = $this->session->get('user', null);
 
         $travel = new Travel();
         $form = $this->createForm(TravelType::class, $travel);
@@ -131,4 +160,26 @@ class TravelController extends AbstractController
 
         return $this->redirectToRoute('travel_index');
     }
+
+    /**
+     * @Route("/update/{id}/{status}", name="update")
+     */
+    public function updateSale(Request $request, Travel $travel)
+    {
+        $client = $this->session->get('user', null);
+
+        $status =  filter_input(INPUT_GET, 'status', FILTER_SANITIZE_STRING);
+        $sale = $travel->setStatus($status);
+
+        $form = $this->createForm(TravelType::class, $travel);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('travel_index');
+        }
+
+    }
+
 }

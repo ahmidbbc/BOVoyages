@@ -24,8 +24,8 @@
             <tr>
                 <td>{{ travel.destination }}</td>
                 <td>{{ travel.details }}</td>
-                <td>{{ travel.fromDate ? travel.fromDate|date('Y-m-d') : '' }}</td>
-                <td>{{ travel.toDate ? travel.toDate|date('Y-m-d') : '' }}</td>
+                <td>{{ travel.fromDate ? travel.fromDate|date('d-m-Y') : '' }}</td>
+                <td>{{ travel.toDate ? travel.toDate|date('d-m-Y') : '' }}</td>
                 <td>{{ travel.maxGuests }}</td>
                 <td>{{ travel.retailPrice }}</td>
                 <td>{{ travel.discountRate }}</td>
