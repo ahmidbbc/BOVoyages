@@ -39,7 +39,7 @@ class SalesController extends AbstractController
      */
     public function index()
     {
-        $client = $this->session->get('user', null);
+        $client = $this->session->get('user');
 
         $salesRepo= $this->em->getRepository(Travel::class);
         $salesList = $salesRepo->getTravelList();

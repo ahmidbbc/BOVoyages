@@ -37,7 +37,8 @@ class TravelController extends AbstractController
      */
     public function index(TravelRepository $travelRepository): Response
     {
-        $client = $this->session->get('user', null);
+
+        $client = $this->session->get('user');
 
         $statusList = [
             "A la vente",
@@ -60,7 +61,7 @@ class TravelController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $client = $this->session->get('user', null);
+        $client = $this->session->get('user');
 
         $travel = new Travel();
         $form = $this->createForm(TravelType::class, $travel);
