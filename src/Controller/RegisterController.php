@@ -24,7 +24,6 @@ class RegisterController extends AbstractController
 
     /**
      * @param $request
-     * @return User
      */
     private function initForm($request)
     {
@@ -32,21 +31,28 @@ class RegisterController extends AbstractController
 
         $this->form = $this->createForm(RegisterType::class, $user);
         $this->form->handleRequest($request, $user);
-
-        return $user;
     }
 
     /**
      * @param $role
+     * @return bool
      */
     private function saveUser($role)
     {
         $user = $this->form->getData();
-        $user->setRole($role);
-        dump($user);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $exist = $repository->findOneBy([ "email" => $user->getEmail() ]);
+        if (!$exist) {
+            $user->setRole($role);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $success = true;
+        } else {
+            $this->addFlash("error", "Cet email est déjà utilisé");
+            $success = false;
+        }
+        return $success;
     }
 
     /**
@@ -56,11 +62,12 @@ class RegisterController extends AbstractController
      */
     public function newClient(Request $request)
     {
-        $user = $this->initForm($request);
+        $this->initForm($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->saveUser(1);
-            return $this->redirectToRoute("sales_index");
+            if ($this->saveUser(1)) {
+                return $this->redirectToRoute("sales_index");
+            }
         }
 
         return $this->render('register/index.html.twig', [
@@ -77,11 +84,12 @@ class RegisterController extends AbstractController
      */
     public function newAdmin(Request $request)
     {
-        $user = $this->initForm($request);
+        $this->initForm($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->saveUser(0);
-            return $this->redirectToRoute("travel_index");
+            if ($this->saveUser(0)) {
+                return $this->redirectToRoute("travel_index");
+            }
         }
 
         return $this->render('register/index.html.twig', [
