@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Travel;
+use App\Entity\User;
 use App\Form\TravelType;
 use App\Repository\TravelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,7 @@ class TravelController extends AbstractController
 
 
     /**
-     * @Route("/", name="travel_index", methods={"GET"})
+     * @Route("/admin", name="travel_index", methods={"GET"})
      */
     public function index(TravelRepository $travelRepository): Response
     {

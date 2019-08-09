@@ -35,7 +35,7 @@ class SalesController extends AbstractController
 
 
     /**
-     * @Route("/sales", name="sales_index")
+     * @Route("/", name="sales_index")
      */
     public function index()
     {
