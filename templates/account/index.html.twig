@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center mt-4">
+        {% if user.travels %}
+            <div class="col-7">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Detail</th>
+                        <th>Statut</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for travel in user.travels %}
+                        <tr>
+                            <td>{{ travel.details | nl2br }}</td>
+                            <td>{{ statusList[travel.status] }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        <div class="col-4">
+            <h1>{{ title }}</h1>
+            {{ form_start(accountForm) }}
+            {{ form_widget(accountForm) }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </div>
+            {{ form_end(accountForm) }}
+        </div>
+    </div>
+{% endblock %}
