@@ -3,7 +3,10 @@
 {% block title %}Travel index{% endblock %}
 
 {% block body %}
-    <div class="row justify-content-center bg bg-primary"><h1>Voyage index</h1></div>
+    <div class="row justify-content-center">
+        <h1>Liste des voyages</h1>
+    </div>
+    <p class="ml-3">Connecté en tant que: {{ client.name }}</p>
     <table class="table table-striped">
         <thead class="bg-dark text-white">
             <tr>
@@ -31,8 +34,8 @@
                 <td>{{ travel.discountRate }}</td>
                 <td>{{ statusList[travel.status] }}</td>
                 <td>
-                    <a class="btn btn-secondary btn-block m-2" href="{{ path('travel_show', {'id': travel.id}) }}">Montrer</a>
-                    <a class="btn btn-info btn-block m-2" href="{{ path('travel_edit', {'id': travel.id}) }}">Editer</a>
+                    <a class="btn btn-secondary btn-block m-2" href="{{ path('travel_show', {'id': travel.id}) }}">Voir</a>
+                    <a class="btn btn-info btn-block m-2" href="{{ path('travel_edit', {'id': travel.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}

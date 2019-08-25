@@ -3,11 +3,13 @@
 {% block title %}Edit Travel{% endblock %}
 
 {% block body %}
-    <h1>Editer voayge</h1>
+    <h1>Modifier un voyage</h1>
+    <div class="col-9">
+        {{ include('travel/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    {{ include('travel/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('travel/_delete_form.html.twig') }}
 
-    <a href="{{ path('travel_index') }}">Retour a la liste</a>
+        <div><a href="{{ path('travel_index') }}">Retour a la liste</a></div>
 
-    {{ include('travel/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
