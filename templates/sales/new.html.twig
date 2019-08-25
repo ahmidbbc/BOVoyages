@@ -1,16 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ travel.details | nl2br }}
+    <h2 class="m-5">{{ travel.destination }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-10 bg-light rounded">
+            <div class="row p-2">
+                <div class="col-3">
+                    <img src="{{ travel.img }}" alt="" class="img-fluid">
+                </div>
+                <div class="col-7">
+                    <h3>{{ travel.destination }}</h3><span class="badge badge-danger">-{{ travel.discountRate }} %</span>
+                    <p>{{ travel.description }}</p>
+                    <del class="badge-pill badge-secondary text-center line-">{{ travel.retailPrice }} €</del>
+                </div>
+                <div class="col-2">
+                    <div class="btn btn-danger">
+                        {{ travel.retailPrice * (1 - (travel.discountRate/100)) }} €
+                    </div>
+                </div>
+            </div>
 
-    {{ form_start(form) }}
+        </div>
 
-    {{ form_widget(form) }}
-    <button type="submit">Réserver</button>
+    </div>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <label for="ccv" class="form-check-label">Code de sécurité:</label>
+            <input type="text" id="ccv" name="ccv" class="form-control">
+            <label for="ccv" class="form-check-label">Date d'expiration:</label>
+            <input type="date" id="ccv" name="ccv" class="form-control">
+        </div>
+
+        <div class="mt-5"><button type="submit" class="btn btn-primary">Réserver</button></div>
 
 
-    {{ form_end(form) }}
 
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 
 {% block title %}
