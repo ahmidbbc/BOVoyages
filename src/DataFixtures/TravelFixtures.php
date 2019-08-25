@@ -38,6 +38,8 @@ class TravelFixtures extends Fixture implements DependentFixtureInterface
             $salePrice = $retailPrice*(100-$discountRate)/100;
             $details = "{$destination}\nDu {$fromDate->format("d/m/Y")} au {$toDate->format("d/m/Y")} pour {$maxGuests}\n
             Pour {$salePrice} (remise de {$discountRate})";
+            $img = $faker->imageUrl(600, 600, 'city');
+            $description = $faker->sentences(5, true);
             $travel
                 ->setDestination($destination)
                 ->setDetails($details)
@@ -46,6 +48,8 @@ class TravelFixtures extends Fixture implements DependentFixtureInterface
                 ->setMaxGuests($maxGuests)
                 ->setRetailPrice($retailPrice)
                 ->setDiscountRate($discountRate)
+                ->setImg($img)
+                ->setDescription($description);
             ;
             $travel->setStatus(0);
             if ($toDate < $now) {
