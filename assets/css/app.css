@@ -2,3 +2,9 @@ body {
     background-color: white;
 }
 
+.grad{
+    background: linear-gradient(to right, #66ccff 51%, #00ffff 100%);
+}
+
+
+
